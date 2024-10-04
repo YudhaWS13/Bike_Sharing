@@ -1,7 +1,3 @@
-# Dashboard Bike Sharing
-
-[![Screenshot dari Dashboard](dashboard-image)](https://github.com/your-username/bike-sharing-dashboard.git)
-
 ## Gambaran Proyek
 
 Dashboard interaktif ini menganalisis data bike-sharing, memberikan wawasan tentang perilaku pengguna dan tren penggunaan. Tujuan dari proyek ini adalah untuk mengeksplorasi pola penggunaan sepeda, seperti jam-jam sibuk, stasiun populer, durasi perjalanan, dan demografi pengguna. Dashboard ini menawarkan:
