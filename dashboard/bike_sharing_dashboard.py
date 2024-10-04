@@ -1,124 +1,113 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
+import seaborn as sns
+import matplotlib.pyplot as plt
 
-# Load datasets
-@st.cache_data
-def load_data():
-    Day = pd.read_csv('https://raw.githubusercontent.com/YudhaWS13/Bike_Sharing/refs/heads/main/data/day.csv')
-    Hour = pd.read_csv('https://raw.githubusercontent.com/YudhaWS13/Bike_Sharing/refs/heads/main/data/hour.csv')
-    Day['dteday'] = pd.to_datetime(Day['dteday'])
-    Hour['dteday'] = pd.to_datetime(Hour['dteday'])
-    return Day, Hour
+# Load data
+Day = pd.read_csv('https://raw.githubusercontent.com/YudhaWS13/Bike_Sharing/refs/heads/main/data/day.csv')
+Hour = pd.read_csv('https://raw.githubusercontent.com/YudhaWS13/Bike_Sharing/refs/heads/main/data/hour.csv')
 
-Day, Hour = load_data()
+# Convert date column
+Day['dteday'] = pd.to_datetime(Day['dteday'])
+Hour['dteday'] = pd.to_datetime(Hour['dteday'])
 
-# Function to categorize time of day
-def time_of_day(hour):
-    if 6 <= hour < 12:
-        return 'Pagi'
-    elif 12 <= hour < 17:
-        return 'Siang'
-    elif 17 <= hour < 21:
-        return 'Sore'
-    else:
-        return 'Malam'
+# 1. Menghitung rata-rata jumlah penyewaan sepeda per hari
+average_rental_per_day = Day['cnt'].mean()
 
-# Add column to categorize time of day
-Hour['time_of_day'] = Hour['hr'].apply(time_of_day)
+# 2. Menyusun data untuk analisis jumlah penyewaan berdasarkan jam
+hourly_rental = Hour.groupby('hr')['cnt'].sum().reset_index()
 
-# Function to display correlation matrix
-def display_correlation_matrix(df, factors):
-    factors_corr = df[factors + ['cnt']].corr()
-    st.header("Faktor-faktor yang Mempengaruhi Penyewaan Sepeda Harian")
-    st.write("Korelasi antara faktor-faktor seperti suhu, kelembapan, kecepatan angin, dan jumlah penyewaan:")
-    st.dataframe(factors_corr)
+# 3. Menemukan jam dengan penyewaan terbanyak
+peak_hour = hourly_rental.loc[hourly_rental['cnt'].idxmax()]
 
-    st.write("""
-    - **Suhu**: Korelasi positif antara suhu dan jumlah penyewaan sepeda.
-    - **Kelembapan**: Korelasi negatif dengan jumlah penyewaan sepeda.
-    - **Musim**: Musim semi dan musim panas cenderung memiliki penyewaan yang lebih tinggi.
-    - **Kecepatan Angin**: Korelasi negatif dengan jumlah penyewaan.
-    - **Hari dalam Minggu**: Penyewaan lebih tinggi pada akhir pekan.
-    """)
+# 4. Menampilkan hasil rata-rata penyewaan sepeda per hari
+st.write(f"### Rata-rata penyewaan sepeda per hari : {average_rental_per_day:.2f}")
 
-# Function to display a chart
-def plot_chart(df, x, y, title, kind="line", labels=None):
-    if kind == "line":
-        fig = px.line(df, x=x, y=y, title=title, labels=labels)
-    elif kind == "bar":
-        fig = px.bar(df, x=x, y=y, title=title, labels=labels)
-    elif kind == "scatter":
-        fig = px.scatter(df, x=x, y=y, title=title, labels=labels)
-    st.plotly_chart(fig)
+# 5. Menampilkan jam puncak penyewaan sepeda
+st.write(f"### Penyewaan sepeda paling banyak terjadi pada jam {peak_hour['hr']} dengan jumlah penyewaan {peak_hour['cnt']}.")
 
-# Main title and introduction
-st.title('📊 Analisis Penyewaan Sepeda 🚴')
-st.write("""
-Selamat datang di aplikasi analisis penyewaan sepeda. Anda bisa menelusuri berbagai visualisasi data penyewaan sepeda berdasarkan waktu, cuaca, dan faktor lainnya. Gunakan **sidebar** untuk memilih visualisasi yang ingin Anda lihat!
-""")
+# 6. Rata-rata per jam untuk informasi lebih mendetail
+average_rental_per_hour = Hour['cnt'].mean()
+st.write(f"### Rata-rata penyewaan sepeda per jam: {average_rental_per_hour:.2f}")
 
-# Sidebar for user interaction
-st.sidebar.title("🔍 Pilih Visualisasi")
-options = st.sidebar.multiselect(
-    "Apa yang ingin Anda lihat?", 
-    ["Rata-rata Penyewaan Sepeda per Hari", 
-     "Penyewaan Sepeda per Jam", 
-     "Waktu Paling Banyak Penyewaan Sepeda", 
-     "Penyewaan Sepeda Berdasarkan Waktu (Pagi, Siang, Sore, Malam)", 
-     "Penyewaan Sepeda Berdasarkan Musim", 
-     "Penyewaan Sepeda Berdasarkan Hari dalam Minggu", 
-     "Korelasi antara Suhu dan Penyewaan Sepeda",
-     "Korelasi antara Kelembapan dan Penyewaan Sepeda",
-     "Faktor-faktor yang Mempengaruhi Penyewaan Harian"]
-)
+# Menampilkan heatmap korelasi
+st.header("Korelasi antara Jumlah Penyewaan dan Fitur Lainnya")
+plt.figure(figsize=(12, 8))
+corr_day = Day.corr()
+sns.heatmap(corr_day[['cnt']], annot=True, fmt=".2f", cmap='coolwarm', square=True, cbar=True)
+plt.title('Korelasi antara Jumlah Penyewaan dan Fitur Lain (Day Dataset)')
+st.pyplot(plt)
 
-# Plot average rentals per day
-if "Rata-rata Penyewaan Sepeda per Hari" in options:
-    average_rental_per_day = Day['cnt'].mean()
-    st.header(f"🚴‍♂️ Rata-rata Penyewaan Sepeda per Hari: {average_rental_per_day:.2f}")
+# Menampilkan boxplot jumlah penyewaan berdasarkan musim
+st.header("Jumlah Penyewaan Sepeda berdasarkan Musim")
+plt.figure(figsize=(10, 6))
+sns.boxplot(x='season', y='cnt', data=Day, palette='Set2')
+plt.title('Jumlah Penyewaan Sepeda berdasarkan Musim')
+plt.xlabel('Musim')
+plt.ylabel('Jumlah Penyewaan')
+plt.grid()
+st.pyplot(plt)
 
-# Plot hourly rentals
-if "Penyewaan Sepeda per Jam" in options:
-    hourly_rental = Hour.groupby('hr')['cnt'].sum().reset_index()
-    plot_chart(hourly_rental, x='hr', y='cnt', title="Penyewaan Sepeda per Jam")
+# Menampilkan scatter plot hubungan antara suhu dan jumlah penyewaan
+st.header("Hubungan antara Suhu dan Jumlah Penyewaan")
+plt.figure(figsize=(10, 6))
+sns.scatterplot(x='temp', y='cnt', data=Day, color='orange', alpha=0.6)
+plt.title('Hubungan antara Suhu dan Jumlah Penyewaan Sepeda')
+plt.xlabel('Suhu (normalisasi 0-1)')
+plt.ylabel('Jumlah Penyewaan')
+plt.grid()
+st.pyplot(plt)
 
-# Plot peak hour for rentals
-if "Waktu Paling Banyak Penyewaan Sepeda" in options:
-    peak_hour = Hour.groupby('hr')['cnt'].sum().idxmax()
-    st.header(f"⏰ Waktu Paling Banyak Penyewaan Sepeda: Jam {int(peak_hour)}:00")
+# Menampilkan scatter plot hubungan antara kelembapan dan jumlah penyewaan
+st.header("Hubungan antara Kelembapan dan Jumlah Penyewaan")
+plt.figure(figsize=(10, 6))
+sns.scatterplot(x='hum', y='cnt', data=Day, color='blue', alpha=0.6)
+plt.title('Hubungan antara Kelembapan dan Jumlah Penyewaan Sepeda')
+plt.xlabel('Kelembapan (normalisasi 0-1)')
+plt.ylabel('Jumlah Penyewaan')
+plt.grid()
+st.pyplot(plt)
 
-# Plot time of day bike rentals
-if "Penyewaan Sepeda Berdasarkan Waktu (Pagi, Siang, Sore, Malam)" in options:
-    time_of_day_rental = Hour.groupby('time_of_day')['cnt'].sum().reset_index()
-    plot_chart(time_of_day_rental, x='time_of_day', y='cnt', title="Penyewaan Sepeda Berdasarkan Waktu", kind="bar")
+# Menampilkan boxplot jumlah penyewaan berdasarkan hari dalam seminggu
+st.header("Jumlah Penyewaan Sepeda berdasarkan Hari dalam Minggu")
+plt.figure(figsize=(10, 6))
+sns.boxplot(x='weekday', y='cnt', data=Day, palette='Set2')
+plt.title('Jumlah Penyewaan Sepeda berdasarkan Hari dalam Seminggu')
+plt.xlabel('Hari dalam Seminggu')
+plt.ylabel('Jumlah Penyewaan')
+plt.grid()
+st.pyplot(plt)
 
-# Plot bike rentals by season
-if "Penyewaan Sepeda Berdasarkan Musim" in options:
-    season_rental = Day.groupby('season')['cnt'].sum().reset_index()
-    season_rental['season'] = season_rental['season'].map({1: 'Musim Semi', 2: 'Musim Panas', 3: 'Musim Gugur', 4: 'Musim Dingin'})
-    plot_chart(season_rental, x='season', y='cnt', title="Penyewaan Sepeda Berdasarkan Musim", kind="bar")
+# Menampilkan line plot jumlah penyewaan per jam
+st.header("Jumlah Penyewaan Sepeda per Jam")
+hourly_data = Hour.groupby('hr')['cnt'].sum().reset_index()
+plt.figure(figsize=(12, 6))
+sns.lineplot(x='hr', y='cnt', data=hourly_data, marker='o', color='blue')
+plt.title('Jumlah Penyewaan Sepeda per Jam')
+plt.xlabel('Jam')
+plt.ylabel('Jumlah Penyewaan')
+plt.xticks(range(0, 24), rotation=45)
+plt.grid()
+st.pyplot(plt)
 
-# Plot bike rentals by weekday
-if "Penyewaan Sepeda Berdasarkan Hari dalam Minggu" in options:
-    weekday_rental = Day.groupby('weekday')['cnt'].sum().reset_index()
-    weekday_rental['weekday'] = weekday_rental['weekday'].map({0: 'Senin', 1: 'Selasa', 2: 'Rabu', 3: 'Kamis', 4: 'Jumat', 5: 'Sabtu', 6: 'Minggu'})
-    plot_chart(weekday_rental, x='weekday', y='cnt', title="Penyewaan Sepeda Berdasarkan Hari dalam Minggu", kind="bar")
+# Menampilkan boxplot untuk jam 6 pagi hingga 8 malam
+st.header("Distribusi Jumlah Penyewaan pada Jam (06:00 - 20:00)")
+daytime_hourly_data = Hour[(Hour['hr'] >= 6) & (Hour['hr'] <= 20)]
+plt.figure(figsize=(12, 6))
+sns.boxplot(x='hr', y='cnt', data=daytime_hourly_data, palette='Set2')
+plt.title('Distribusi Jumlah Penyewaan Sepeda pada Jam (06:00 - 20:00)')
+plt.xlabel('Jam')
+plt.ylabel('Jumlah Penyewaan')
+plt.xticks(range(6, 21), rotation=45)
+plt.grid()
+st.pyplot(plt)
 
-# Plot correlation between temperature and bike rentals
-if "Korelasi antara Suhu dan Penyewaan Sepeda" in options:
-    plot_chart(Day, x='temp', y='cnt', title="Korelasi antara Suhu dan Penyewaan Sepeda", kind="scatter")
-
-# Plot correlation between humidity and bike rentals
-if "Korelasi antara Kelembapan dan Penyewaan Sepeda" in options:
-    plot_chart(Day, x='hum', y='cnt', title="Korelasi antara Kelembapan dan Penyewaan Sepeda", kind="scatter")
-
-# Display correlation of factors affecting daily rentals
-if "Faktor-faktor yang Mempengaruhi Penyewaan Harian" in options:
-    factors = ['temp', 'atemp', 'hum', 'windspeed', 'season', 'weekday']
-    display_correlation_matrix(Day, factors)
-
-# Footer message
-st.write("""
-**Pilih opsi di sidebar untuk menampilkan grafik yang lebih spesifik!**
-""")
+# Menampilkan histogram jumlah penyewaan selama siang hari
+st.header("Distribusi Jumlah Penyewaan di Siang Hari")
+plt.figure(figsize=(12, 6))
+sns.histplot(daytime_hourly_data['cnt'], bins=20, kde=True, color='orange')
+plt.title('Distribusi Jumlah Penyewaan Sepeda di Siang Hari')
+plt.xlabel('Jumlah Penyewaan')
+plt.ylabel('Frekuensi')
+plt.grid()
+st.pyplot(plt)
