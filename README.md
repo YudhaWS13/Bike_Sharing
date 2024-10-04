@@ -1,37 +1,37 @@
-# Bike Sharing Dashboard
+# Dashboard Bike Sharing
 
-[![Screenshot of Dashboard](dashboard-image)](https://github.com/your-username/bike-sharing-dashboard.git)
+[![Screenshot dari Dashboard](dashboard-image)](https://github.com/your-username/bike-sharing-dashboard.git)
 
-## Project Overview
+## Gambaran Proyek
 
-This interactive dashboard analyzes bike-sharing data, providing insights into user behavior and trends. The goal is to explore patterns of bike usage, such as peak hours, popular stations, trip durations, and user demographics. The dashboard offers:
+Dashboard interaktif ini menganalisis data bike-sharing, memberikan wawasan tentang perilaku pengguna dan tren penggunaan. Tujuan dari proyek ini adalah untuk mengeksplorasi pola penggunaan sepeda, seperti jam-jam sibuk, stasiun populer, durasi perjalanan, dan demografi pengguna. Dashboard ini menawarkan:
 
-- Analysis of hourly, daily, and monthly bike usage trends.
-- Insights into user types (e.g., casual vs. subscriber) and their behavior.
-- Visualization of the most popular start and end stations.
-- Examination of trip durations and how they vary across different times of day.
-- Weather data integration to understand how conditions affect bike usage.
+- Analisis tren penggunaan sepeda secara per jam, harian, dan bulanan.
+- Wawasan tentang tipe pengguna (misalnya, pengguna kasual vs. pelanggan) dan perilaku mereka.
+- Visualisasi stasiun awal dan akhir paling populer.
+- Pemeriksaan durasi perjalanan dan bagaimana variasinya di berbagai waktu dalam sehari.
+- Integrasi data cuaca untuk memahami bagaimana kondisi cuaca memengaruhi penggunaan sepeda.
 
-This project demonstrates data analysis and visualization techniques using Python libraries such as Pandas, Plotly, and Streamlit. It serves as a practical example for analyzing and visualizing bike-sharing data.
+Proyek ini menunjukkan teknik analisis data dan visualisasi menggunakan pustaka Python seperti Pandas, Plotly, dan Streamlit. Proyek ini berfungsi sebagai contoh praktis untuk menganalisis dan memvisualisasikan data bike-sharing.
 
-## How to Run the Dashboard
+## Cara Menjalankan Dashboard
 
-1. **Clone the Repository:**
+1. **Clone Repositori:**
    ```bash
    git clone https://github.com/your-username/bike-sharing-dashboard.git
    ```
 
-2. **Navigate to the Project Directory:**
+2. **Navigasi ke Direktori Proyek:**
    ```bash
    cd bike-sharing-dashboard
    ```
 
-3. **Create a Virtual Environment (Recommended):**
+3. **Buat Lingkungan Virtual (Disarankan):**
    ```bash
    python -m venv .venv
    ```
 
-4. **Activate the Virtual Environment:**
+4. **Aktifkan Lingkungan Virtual:**
    - **Windows:**
      ```bash
      .venv\Scripts\activate
@@ -41,28 +41,28 @@ This project demonstrates data analysis and visualization techniques using Pytho
      source .venv/bin/activate
      ```
 
-5. **Install Required Libraries:**
+5. **Instal Pustaka yang Dibutuhkan:**
    ```bash
    pip install -r requirements.txt
    ```
 
-6. **Run the Streamlit App:**
+6. **Jalankan Aplikasi Streamlit:**
    ```bash
    streamlit run bike_sharing_dashboard.py
    ```
 
-The dashboard will open in your web browser, providing an interactive analysis of the bike-sharing data.
+Dashboard akan terbuka di peramban web Anda, menyediakan analisis interaktif dari data bike-sharing.
 
 ## Data
 
-The dataset used in this project contains trip data from a bike-sharing system, including information such as start and end times, station locations, trip durations, and user types. You can find the data files in the `data` directory of this repository.
+Dataset yang digunakan dalam proyek ini berisi data perjalanan dari sistem bike-sharing, termasuk informasi seperti waktu mulai dan akhir, lokasi stasiun, durasi perjalanan, dan tipe pengguna. Anda dapat menemukan file data di direktori `data` di repositori ini.
 
-## Author
+## Penulis
 
-- **Name:** [Your Name]
-- **Email:** [your-email@example.com]
-- **GitHub Profile:** [https://github.com/your-username](https://github.com/your-username)
+- **Nama:** [Nama Anda]
+- **Email:** [email-anda@example.com]
+- **Profil GitHub:** [https://github.com/your-username](https://github.com/your-username)
 
 ## Demo
 
-You can try a live demo of the dashboard here: [Bike Sharing Dashboard](https://bike-sharing-dashboard-demo.com)
+Anda dapat mencoba demo langsung dari dashboard di sini: [Dashboard Bike Sharing](https://bike-sharing-dashboard-demo.com)
