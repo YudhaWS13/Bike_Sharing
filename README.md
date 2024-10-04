@@ -61,4 +61,4 @@ Dataset yang digunakan dalam proyek ini berisi data perjalanan dari sistem bike-
 
 ## Demo
 
-Anda dapat mencoba demo langsung dari dashboard di sini: [Dashboard Bike Sharing](https://bike-sharing-dashboard-demo.com)
+Anda dapat mencoba demo langsung dari dashboard di sini: [Dashboard Bike Sharing](https://bikesharingyudha13.streamlit.app/)
