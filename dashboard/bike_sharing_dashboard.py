@@ -60,19 +60,37 @@ Selamat datang di aplikasi analisis penyewaan sepeda. Anda bisa menelusuri berba
 
 # Sidebar for user interaction
 st.sidebar.title("🔍 Pilih Visualisasi")
+# Sidebar untuk interaksi pengguna
 options = st.sidebar.multiselect(
     "Apa yang ingin Anda lihat?", 
     ["Rata-rata Penyewaan Sepeda per Hari", 
      "Penyewaan Sepeda per Jam", 
      "Waktu Paling Banyak Penyewaan Sepeda", 
+     "Rata-rata Penyewaan Sepeda per Jam",  # Opsi baru
      "Penyewaan Sepeda Berdasarkan Waktu (Pagi, Siang, Sore, Malam)", 
      "Penyewaan Sepeda Berdasarkan Musim", 
      "Penyewaan Sepeda Berdasarkan Hari dalam Minggu", 
      "Korelasi antara Suhu dan Penyewaan Sepeda",
      "Korelasi antara Kelembapan dan Penyewaan Sepeda",
      "Faktor-faktor yang Mempengaruhi Penyewaan Harian",
-     "Line Plot Penyewaan Sepeda per Jam"]  # Opsi baru
+     "Line Plot Penyewaan Sepeda per Jam"]
 )
+
+# Menampilkan Rata-rata Penyewaan Sepeda per Hari
+if "Rata-rata Penyewaan Sepeda per Hari" in options:
+    average_rental_per_day = Day['cnt'].mean()
+    st.header(f"🚴‍♂️ Rata-rata Penyewaan Sepeda per Hari: {average_rental_per_day:.2f}")
+
+# Menampilkan Jam Puncak Penyewaan Sepeda
+if "Waktu Paling Banyak Penyewaan Sepeda" in options:
+    hourly_rental = Hour.groupby('hr')['cnt'].sum().reset_index()
+    peak_hour = hourly_rental.loc[hourly_rental['cnt'].idxmax()]
+    st.header(f"⏰ Waktu Paling Banyak Penyewaan Sepeda: Jam {int(peak_hour['hr'])}:00 dengan jumlah penyewaan {int(peak_hour['cnt'])}")
+
+# Menampilkan Rata-rata Penyewaan Sepeda per Jam
+if "Rata-rata Penyewaan Sepeda per Jam" in options:
+    average_rental_per_hour = Hour['cnt'].mean()
+    st.header(f"🚴‍♀️ Rata-rata Penyewaan Sepeda per Jam: {average_rental_per_hour:.2f}")
 
 # Menampilkan Line Plot untuk Penyewaan Sepeda per Jam
 if "Line Plot Penyewaan Sepeda per Jam" in options:
