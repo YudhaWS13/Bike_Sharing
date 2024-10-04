@@ -70,8 +70,14 @@ options = st.sidebar.multiselect(
      "Penyewaan Sepeda Berdasarkan Hari dalam Minggu", 
      "Korelasi antara Suhu dan Penyewaan Sepeda",
      "Korelasi antara Kelembapan dan Penyewaan Sepeda",
-     "Faktor-faktor yang Mempengaruhi Penyewaan Harian"]
+     "Faktor-faktor yang Mempengaruhi Penyewaan Harian",
+     "Line Plot Penyewaan Sepeda per Jam"]  # Opsi baru
 )
+
+# Menampilkan Line Plot untuk Penyewaan Sepeda per Jam
+if "Line Plot Penyewaan Sepeda per Jam" in options:
+    st.header("Jumlah Penyewaan Sepeda per Jam")
+    plot_chart(hourly_data, x='hr', y='cnt', title="Line Plot Penyewaan Sepeda per Jam", kind="line")
 
 # Plot average rentals per day
 if "Rata-rata Penyewaan Sepeda per Hari" in options:
