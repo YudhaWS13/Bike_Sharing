@@ -57,7 +57,7 @@ Dataset yang digunakan dalam proyek ini berisi data perjalanan dari sistem bike-
 
 - **Nama:** [Yudha Wahyu Saputra]
 - **Email:** [m179b4ky4558@bangkit.academy]
-- **Profil GitHub:** [https://github.com/your-username](https://github.com/your-username)
+- **Profil GitHub:** [https://github.com/your-username](https://github.com/YudhaWS13/)
 
 ## Demo
 
