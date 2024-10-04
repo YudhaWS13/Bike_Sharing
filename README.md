@@ -1,61 +1,68 @@
-Dasbor Berbagi Sepeda dengan Streamlit
-Repositori ini berisi Dasbor Berbagi Sepeda sederhana yang dibuat dengan Streamlit. Dasbor menampilkan wawasan utama seperti jumlah rata-rata penyewaan sepeda harian dan waktu puncak penyewaan di siang hari, berdasarkan himpunan data yang disediakan.
+# Bike Sharing Dashboard
 
-Fitur
-Tampilkan jumlah rata-rata penyewaan sepeda per hari.
-Tampilkan grafik garis penyewaan sepeda per jam untuk mengidentifikasi jam sibuk penggunaan sepeda.
-Prasyarat
-Sebelum menjalankan aplikasi Streamlit, pastikan Anda telah menginstal yang berikut ini:
+[![Screenshot of Dashboard](dashboard-image)](https://github.com/your-username/bike-sharing-dashboard.git)
 
-Python 3.x
-Pip (pengelola paket Python)
-Instalasi
-Ikuti langkah-langkah di bawah ini untuk menyiapkan dan menjalankan dasbor di komputer lokal Anda:
+## Project Overview
 
-1. Mengkloning Repositori
-Anda dapat mengkloning repositori ini dengan menjalankan:
-git clone <repository-url>
-cd <repository-folder>
+This interactive dashboard analyzes bike-sharing data, providing insights into user behavior and trends. The goal is to explore patterns of bike usage, such as peak hours, popular stations, trip durations, and user demographics. The dashboard offers:
 
-2. Instal Paket Python yang Diperlukan
-Instal paket Python yang diperlukan. Anda dapat melakukannya dengan menggunakan dengan menjalankan perintah berikut:streamlit pandas plotly pip
-pip install -r requirements.txt
+- Analysis of hourly, daily, and monthly bike usage trends.
+- Insights into user types (e.g., casual vs. subscriber) and their behavior.
+- Visualization of the most popular start and end stations.
+- Examination of trip durations and how they vary across different times of day.
+- Weather data integration to understand how conditions affect bike usage.
 
-Atau, Anda dapat menginstalnya secara manual menggunakan:
-pip install streamlit pandas plotly
+This project demonstrates data analysis and visualization techniques using Python libraries such as Pandas, Plotly, and Streamlit. It serves as a practical example for analyzing and visualizing bike-sharing data.
 
-3. Jalankan Aplikasi Streamlit
-Untuk menjalankan aplikasi Streamlit, gunakan perintah berikut di terminal atau prompt perintah Anda:
-streamlit run app.py
+## How to Run the Dashboard
 
-Pastikan Anda mengganti dengan nama sebenarnya dari skrip Python Anda jika berbeda.app.py
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/your-username/bike-sharing-dashboard.git
+   ```
 
-4. Lihat Dasbor
-Setelah aplikasi Streamlit dimulai, Anda dapat melihat dasbor dengan membuka browser web Anda dan menavigasi ke:
-http://localhost:8501
+2. **Navigate to the Project Directory:**
+   ```bash
+   cd bike-sharing-dashboard
+   ```
 
-Ini akan membuka dasbor interaktif tempat Anda dapat menjelajahi visualisasi dan wawasan.
+3. **Create a Virtual Environment (Recommended):**
+   ```bash
+   python -m venv .venv
+   ```
 
-Struktur Proyek
-app.py: Skrip Python utama yang menjalankan dasbor Streamlit.
-requirements.txt: File yang mencantumkan semua paket Python yang diperlukan untuk menjalankan proyek.
-README.md: File ini dengan instruksi tentang cara menyiapkan dan menjalankan dasbor.
-Dataset
-Dasbor menggunakan himpunan data berbagi sepeda yang dapat diambil langsung dari URL berikut:
+4. **Activate the Virtual Environment:**
+   - **Windows:**
+     ```bash
+     .venv\Scripts\activate
+     ```
+   - **macOS/Linux:**
+     ```bash
+     source .venv/bin/activate
+     ```
 
-Himpunan data hari
-Himpunan data jam
-Contoh Visualisasi
-Sewa Sepeda Rata-rata per Hari: Menampilkan jumlah rata-rata penyewaan sepeda selama himpunan data.
-Sewa Per Jam: Grafik garis yang menunjukkan tren penyewaan sepeda per jam untuk mengidentifikasi waktu penggunaan puncak.
-Pemecahan masalah
-Jika Anda mengalami kesalahan, pastikan Streamlit diinstal dan ditambahkan dengan benar ke PATH sistem Anda. Anda dapat mengikuti petunjuk penginstalan di atas untuk mengatasinya.'streamlit' is not recognized as an internal or external command
+5. **Install Required Libraries:**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-Lisensi
-Proyek ini dilisensikan di bawah Lisensi MIT - lihat file LISENSI untuk detailnya.
+6. **Run the Streamlit App:**
+   ```bash
+   streamlit run bike_sharing_dashboard.py
+   ```
 
-Opsional: Buat requirements.txt
-Anda dapat membuat file dengan menjalankan:requirements.txt
-pip freeze > requirements.txt
-Ini akan menangkap semua paket yang diinstal di lingkungan virtual Anda.
+The dashboard will open in your web browser, providing an interactive analysis of the bike-sharing data.
 
+## Data
+
+The dataset used in this project contains trip data from a bike-sharing system, including information such as start and end times, station locations, trip durations, and user types. You can find the data files in the `data` directory of this repository.
+
+## Author
+
+- **Name:** [Your Name]
+- **Email:** [your-email@example.com]
+- **GitHub Profile:** [https://github.com/your-username](https://github.com/your-username)
+
+## Demo
+
+You can try a live demo of the dashboard here: [Bike Sharing Dashboard](https://bike-sharing-dashboard-demo.com)
